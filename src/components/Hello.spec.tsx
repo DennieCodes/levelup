@@ -1,3 +1,4 @@
+import React from 'react';
 import { Hello } from './Hello';
 import { render, screen } from '@testing-library/react';
 
