@@ -1,11 +1,11 @@
-import type { NextPage } from 'next';
+import type { NextPage } from "next";
 
 const Home: NextPage = () => {
-	return (
-		<>
-			<h1>Level Up</h1>
-		</>
-	);
+  return (
+    <main>
+      <h1>Level Up</h1>
+    </main>
+  );
 };
 
 export default Home;
