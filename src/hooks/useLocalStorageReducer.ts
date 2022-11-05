@@ -1,0 +1,28 @@
+import { useReducer, useEffect } from "react";
+import { HabitType, HabitReducerAction } from "../models/habits";
+
+export default function useLocalStorageReducer(
+  key: string,
+  defaultVal: HabitType[],
+  reducer: (state: HabitType[], action: HabitReducerAction) => HabitType[]
+): [HabitType[], React.Dispatch<HabitReducerAction>] {
+  const [state, dispatch] = useReducer(reducer, defaultVal, () => {
+    let val = defaultVal;
+
+    try {
+      val = JSON.parse(
+        window.localStorage.getItem(key) || String(defaultVal)
+      ) as HabitType[];
+    } catch (e) {
+      val = defaultVal;
+    }
+
+    return val;
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+
+  return [state, dispatch];
+}

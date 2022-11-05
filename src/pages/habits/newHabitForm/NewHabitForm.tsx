@@ -1,25 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+// import React, { useState } from 'react';
+import { ADD } from "../../../actions";
+import { HabitsContext } from "../../../context/habits.context";
 import styles from "./NewHabitForm.module.scss";
 import useInputState from "../../../hooks/useInputState";
 
 export default function NewHabitForm() {
   const [title, setTitle, resetTitle] = useInputState("");
-  const [established, setEstablished] = useState(false);
-  const [metric, setMetric, resetMetric] = useInputState("");
+  // const [established, setEstablished] = useState(false);
+  // const [metric, setMetric, resetMetric] = useInputState('');
+  const { dispatch } = useContext(HabitsContext);
 
   const handleFormSubmission = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // NOTE: dispatch should be called here for handling the form data once context and reducers are established
+    dispatch({ type: ADD, habit: title, id: "", newHabit: "" });
 
     resetTitle();
-    resetMetric();
-    setEstablished(false);
+    // resetMetric();
+    // setEstablished(false);
   };
 
-  const handleChangeEstablished = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEstablished(e.currentTarget.checked);
-  };
+  // const handleChangeEstablished = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // 	setEstablished(e.currentTarget.checked);
+  // };
 
   return (
     <form className={styles.newHabitForm} onSubmit={handleFormSubmission}>
@@ -34,7 +37,7 @@ export default function NewHabitForm() {
         />
       </label>
 
-      <div className={styles.established}>
+      {/* <div className={styles.established}>
         <input
           onChange={handleChangeEstablished}
           type="checkbox"
@@ -54,7 +57,7 @@ export default function NewHabitForm() {
           placeholder="Metric"
         />
         <label htmlFor="metric">Metric</label>
-      </div>
+      </div> */}
 
       <button className={styles.submitButton}>Submit</button>
     </form>
