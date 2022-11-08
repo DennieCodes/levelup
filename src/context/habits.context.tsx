@@ -8,7 +8,7 @@ import { HabitType, HabitReducerAction } from "../models/habits";
 const defaultHabit: HabitType[] = [
   {
     id: uuidv4(),
-    habit: "Another Habit",
+    habit: "Test Habit",
     completed: false,
   },
 ];
