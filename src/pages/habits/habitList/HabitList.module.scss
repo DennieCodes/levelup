@@ -1,0 +1,18 @@
+.habitList {
+  display: flex;
+  flex-direction: column;
+}
+
+.habits {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+  border: 2px solid black;
+}
+
+.habitDivider {
+  height: 2px;
+  width: 100%;
+  background-color: darkgrey;
+  border-width: 0;
+}
