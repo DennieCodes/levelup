@@ -9,20 +9,31 @@ const HabitList = () => {
   const { habits } = useContext(HabitsContext);
 
   return (
-    <section className={styles.habitList}>
+    <div className={styles.habitList}>
       <h1>Habit List</h1>
       <ul className={styles.habits}>
         {habits.map((habit: HabitType) => {
           return (
-            <>
-              <Habit key={habit.id} {...habit} />
-              <hr className={styles.habitDivider} />
-            </>
+            <div key={habit.id} className={habit.habit}>
+              <Habit {...habit} />
+            </div>
           );
         })}
       </ul>
-    </section>
+    </div>
   );
 };
+
+// export async function getStaticProps() {
+// 	const argentineTime = await fetch('http://worldtimeapi.org/api/ip')
+// 		.then((response) => response.json())
+// 		.then((data) => console.log(data));
+
+// 	console.log(argentineTime);
+
+// 	return {
+// 		argentineTime,
+// 	};
+// }
 
 export default HabitList;
