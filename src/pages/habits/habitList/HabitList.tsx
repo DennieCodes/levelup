@@ -8,32 +8,22 @@ import { HabitType } from "../../../models/habits";
 const HabitList = () => {
   const { habits } = useContext(HabitsContext);
 
-  return (
-    <div className={styles.habitList}>
-      <h1>Habit List</h1>
-      <ul className={styles.habits}>
-        {habits.map((habit: HabitType) => {
-          return (
-            <div key={habit.id} className={habit.habit}>
-              <Habit {...habit} />
-            </div>
-          );
-        })}
-      </ul>
-    </div>
-  );
+  if (habits.length)
+    return (
+      <div className={styles.habitList}>
+        <h1>Habit List</h1>
+        <ul className={styles.habits}>
+          {habits.map((habit: HabitType) => {
+            return (
+              <div key={habit.id} className={habit.habit}>
+                <Habit {...habit} />
+              </div>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  return null;
 };
-
-// export async function getStaticProps() {
-// 	const argentineTime = await fetch('http://worldtimeapi.org/api/ip')
-// 		.then((response) => response.json())
-// 		.then((data) => console.log(data));
-
-// 	console.log(argentineTime);
-
-// 	return {
-// 		argentineTime,
-// 	};
-// }
 
 export default HabitList;

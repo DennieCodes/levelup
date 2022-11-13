@@ -22,12 +22,6 @@ export const HabitsContext = createContext<HabitsContextType>(
 );
 
 export function HabitsProvider({ children }: { children: React.ReactNode }) {
-  // const [habits, dispatch] = useLocalStorageReducer(
-  //   "habits",
-  //   defaultHabit,
-  //   habitReducer
-  // );
-
   const [habits, dispatch] = useReducer(habitReducer, defaultHabit);
 
   return (
