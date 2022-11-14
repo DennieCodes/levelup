@@ -11,11 +11,10 @@ const HabitList = () => {
   if (habits.length)
     return (
       <div className={styles.habitList}>
-        <h1>Habit List</h1>
         <ul className={styles.habits}>
           {habits.map((habit: HabitType) => {
             return (
-              <div key={habit.id} className={habit.habit}>
+              <div key={habit.id}>
                 <Habit {...habit} />
               </div>
             );

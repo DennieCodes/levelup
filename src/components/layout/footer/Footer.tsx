@@ -1,7 +1,9 @@
+import styles from "./Footer.module.scss";
+
 export default function Footer() {
   return (
-    <footer>
-      <p>Copyright 2022</p>
+    <footer className={styles.footer}>
+      <p className={styles.copyright}>Copyright 2022</p>
     </footer>
   );
 }
