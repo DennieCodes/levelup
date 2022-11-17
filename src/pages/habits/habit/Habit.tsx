@@ -33,9 +33,9 @@ const Habit = ({ habit, completed, id }: HabitType) => {
             aria-label="Edit"
             onClick={toggleEditing}
           >
+            {/* eslint-disable-next-line */}
             <Image src={editIcon} alt="Edit button" />
           </button>
-
           <button
             className={styles.habitControls}
             aria-label="Delete"
@@ -43,6 +43,7 @@ const Habit = ({ habit, completed, id }: HabitType) => {
               dispatch({ type: REMOVE, id: id, habit: "", newHabit: "" })
             }
           >
+            {/* eslint-disable-next-line */}
             <Image src={deleteIcon} alt="Delete button" />
           </button>
         </>
