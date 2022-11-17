@@ -8,6 +8,14 @@
   flex-direction: column;
   padding: 0.5em;
   border: 2px solid black;
+
+  & div {
+    border-bottom: 2px solid lightgray;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 }
 
 .habitDivider {

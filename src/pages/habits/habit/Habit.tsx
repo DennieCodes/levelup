@@ -33,7 +33,7 @@ const Habit = ({ habit, completed, id }: HabitType) => {
             aria-label="Edit"
             onClick={toggleEditing}
           >
-            <Image src={editIcon} alt="Edit button" width={24} height={24} />
+            <Image src={editIcon} alt="Edit button" />
           </button>
 
           <button
@@ -43,12 +43,7 @@ const Habit = ({ habit, completed, id }: HabitType) => {
               dispatch({ type: REMOVE, id: id, habit: "", newHabit: "" })
             }
           >
-            <Image
-              src={deleteIcon}
-              alt="Delete button"
-              width={24}
-              height={24}
-            />
+            <Image src={deleteIcon} alt="Delete button" />
           </button>
         </>
       )}
