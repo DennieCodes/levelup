@@ -13,11 +13,13 @@ export default function NewHabitForm() {
 
   const handleFormSubmission = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch({ type: ADD, habit: title, id: "", newHabit: "" });
+    if (title.length !== 0) {
+      dispatch({ type: ADD, habit: title, id: "", newHabit: "" });
 
-    resetTitle();
-    // resetMetric();
-    // setEstablished(false);
+      resetTitle();
+      // resetMetric();
+      // setEstablished(false);
+    }
   };
 
   // const handleChangeEstablished = (e: React.ChangeEvent<HTMLInputElement>) => {
