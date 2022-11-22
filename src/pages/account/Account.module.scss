@@ -1,0 +1,19 @@
+@import "../../../styles/mixins.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+
+  @include mobile-landscape {
+    padding: 0 2em;
+  }
+}
+.loginSignup {
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  align-self: center;
+  width: 100%;
+  max-width: 30em;
+}

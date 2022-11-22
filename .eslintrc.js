@@ -7,6 +7,7 @@ module.exports = {
     "plugin:testing-library/react",
     "next",
     "next/core-web-vitals",
+    // 'plugin:react-hooks/recommended',
   ],
   parser: "@typescript-eslint/parser",
   plugins: ["react", "@typescript-eslint"],
