@@ -1,4 +1,3 @@
-// import useInputState from '../../hooks/useInputState';
 import useInputState from "../../hooks/useInputState";
 
 export default function Account() {
@@ -11,7 +10,11 @@ export default function Account() {
 
     void fetch("/api/auth/register", {
       method: "POST",
-      body: JSON.stringify({ name: name, email: email, password: password }),
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+      }),
       headers: { "Content-Type": "application/json" },
     }).then((response) => response.json());
     // .then((data) => console.log(`Here is the data: `, data));
@@ -50,7 +53,7 @@ export default function Account() {
           <label htmlFor="password">
             Password
             <input
-              type="text"
+              type="password"
               id="password"
               value={password}
               onChange={handlePassword}
