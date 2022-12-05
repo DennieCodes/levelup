@@ -17,7 +17,6 @@ export default function Account() {
       }),
       headers: { "Content-Type": "application/json" },
     }).then((response) => response.json());
-    // .then((data) => console.log(`Here is the data: `, data));
 
     nameReset();
     emailReset();

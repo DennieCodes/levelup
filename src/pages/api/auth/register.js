@@ -2,28 +2,33 @@
 // import { NextApiRequest, NextApiResponse } from 'next';
 //
 // const handler = (req: NextApiRequest, res: NextApiResponse) => {
-import { MongoClient } from "mongodb";
+import { hashPassword } from "/lib/auth";
+import connectToDatabase from "/lib/db";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
-    const mongoURI = process.env.MONGODB_URI;
+    // Need add Validation or utilize Middleware via Next 13
+
     const dbName = process.env.DB_NAME;
     const tableName = process.env.USER_COLLECTION_NAME;
 
-    const client = await MongoClient.connect(mongoURI);
-    console.log("Connected successfully to server");
+    try {
+      const client = await connectToDatabase();
+      const db = client.db(dbName);
+      const collection = db.collection(tableName);
 
-    const db = client.db(dbName);
-    const collection = db.collection(tableName);
+      const { email, name, password } = req.body;
+      const hashedPassword = hashPassword(password);
 
-    const insertResult = await collection.insertOne({
-      email: req.body.email,
-      name: req.body.name,
-      password: req.body.password,
-    });
-
-    console.log("Inserted documents =>", insertResult);
-    client.close();
+      await collection.insertOne({
+        email: email,
+        name: name,
+        password: hashedPassword,
+      });
+      client.close();
+    } catch (error) {
+      console.error({ message: error.message });
+    }
 
     res.status(201).json({ message: "User Registered" });
   }
