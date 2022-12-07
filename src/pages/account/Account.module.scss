@@ -1,0 +1,19 @@
+@import "../../../styles/mixins.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  align-items: center;
+
+  @include mobile-landscape {
+    padding: 0 2em;
+  }
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  max-width: 35em;
+  width: 100%;
+}
