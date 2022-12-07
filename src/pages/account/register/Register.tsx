@@ -12,9 +12,9 @@ const Register = () => {
     void fetch("/api/auth/register", {
       method: "POST",
       body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password,
+        name,
+        email,
+        password,
       }),
       headers: { "Content-Type": "application/json" },
     }).then((response) => response.json());
