@@ -7,15 +7,18 @@ import connectToDatabase from "/lib/db";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
-    // Need add Validation or utilize Middleware via Next 13
+    // Need add backend validation or utilize Middleware via Next 13
 
     const dbName = process.env.DB_NAME;
     const tableName = process.env.USER_COLLECTION_NAME;
 
     try {
       const client = await connectToDatabase();
+
       const db = client.db(dbName);
       const collection = db.collection(tableName);
+
+      // Check if the user exists already in the database
 
       const { email, name, password } = req.body;
       const hashedPassword = await hashPassword(password);
@@ -25,8 +28,10 @@ const handler = async (req, res) => {
         name: name,
         password: hashedPassword,
       });
+
       client.close();
     } catch (error) {
+      console.log("There was an error.");
       console.error({ message: error.message });
     }
 
