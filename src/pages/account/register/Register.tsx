@@ -26,11 +26,11 @@ const Register = () => {
     // https://github.com/deanilvincent/check-password-strength
   };
 
-  function loginHandler(event: React.FormEvent<HTMLFormElement>) {
+  function registerHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (validEmail && name.length > 0) {
-      void fetch("/api/auth/register", {
+      void fetch("/api/account/register", {
         method: "POST",
         body: JSON.stringify({
           name,
@@ -49,7 +49,7 @@ const Register = () => {
   }
   return (
     <div className={styles.container}>
-      <form className={styles.registerForm} onSubmit={loginHandler}>
+      <form className={styles.registerForm} onSubmit={registerHandler}>
         <div>
           <label htmlFor="name">
             Username
