@@ -1,40 +1,69 @@
 import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import { connectToDatabase } from "../../../../lib/db";
 import { verifyPassword } from "../../../../lib/auth";
 
+const nextAuthSecret = process.env.NEXT_AUTH_SECRET;
+
 export default NextAuth({
+  adapter: MongoDBAdapter(connectToDatabase, {
+    databaseName: process.env.DB_NAME,
+    colletions: process.env.USER_COLLECTION_NAME,
+  }),
+  secret: nextAuthSecret,
   session: {
     jwt: true,
   },
   providers: [
-    Providers.Credentials({
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
       async authorize(credentials) {
-        const dbName = process.env.DB_NAME;
-        const userCollectionName = process.env.USER_COLLECTION_NAME;
+        // if (!process.env.DB_NAME || !process.env.USER_COLLECTION_NAME) {
+        // 	throw new Error('Please add Database and Colletion name .env.local');
+        // }
+        // // const dbName = process.env.DB_NAME;
+        // const userCollectionName = process.env.USER_COLLECTION_NAME;
 
-        const client = await connectToDatabase();
-        const userCollection = client.db(dbName).collection(userCollectionName);
+        // const client = await connectToDatabase();
+        // // const db = client.db(dbName);
+        // const collection = client.collection(userCollectionName);
+        // // client.db(dbName).collection(userCollectionName);
+        console.log("Running credentials");
+        const matchingUser = MongoDBAdapter.getUserByEmail(credentials.email);
 
-        const user = await userCollection.findOne({ email: credentials.email });
+        console.log(matchingUser);
 
-        if (!user) {
+        // const matchingUser = await collection.findOne({
+        // 	email: credentials.email,
+        // });
+
+        if (!matchingUser) {
           throw new Error("No user found!");
         }
 
         const isValid = await verifyPassword(
           credentials.password,
-          user.password
+          matchingUser.password
         );
 
         if (!isValid) {
-          client.close();
+          // client.close();
           throw new Error("Could not log you in");
         }
 
-        client.close();
+        // client.close();
 
-        return { email: user.email };
+        const user = {
+          name: matchingUser.name,
+          email: matchingUser.email,
+        };
+
+        return user;
       },
     }),
   ],

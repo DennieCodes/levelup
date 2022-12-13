@@ -37,3 +37,5 @@ I've implemented my versions of these different strategies and techniques using 
 
 1. Set up register API's and register page.
 2. Set up basic email and form validation on Register page/component.
+3. Change account component to default on login with click option to register and vice versa
+4. Refactor register/login form calls to API to next-auth.

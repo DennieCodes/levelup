@@ -3,12 +3,27 @@ import { useState } from "react";
 import useInputState from "../../../hooks/useInputState";
 import validateEmail from "../../../helpers/validateEmail";
 import React from "react";
+import { signIn } from "next-auth/react";
 
-const Login = () => {
+// import { getProviders } from 'next-auth/react';
+
+type LoginProp = {
+  toggleRegister: () => void;
+};
+
+const Login = ({ toggleRegister }: LoginProp) => {
   const [validEmail, setValidEmail] = useState(false);
 
   const [email, setEmail, emailReset] = useInputState("");
   const [password, setPassword, passwordReset] = useInputState("");
+
+  // CODE below is to check next-auth setup providers
+  // const providers = async () => {
+  // 	const providers = await getProviders();
+  // 	return providers;
+  // };
+
+  // void providers().then((response) => console.log(response));
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e);
@@ -29,16 +44,13 @@ const Login = () => {
   const loginHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    void fetch("/api/account/login", {
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .catch((error) => console.log(error));
+    const result = signIn("credentials", {
+      redirect: false,
+      email: email,
+      password: password,
+    });
+
+    console.log("Results within Login Component: ", result);
   };
 
   return (
@@ -72,6 +84,10 @@ const Login = () => {
           />
         </label>
         <button type="submit">Submit</button>
+        <p>
+          Don&apos;t have an account yet?{" "}
+          <button onClick={toggleRegister}>Sign up now</button>
+        </p>
       </form>
     </div>
   );

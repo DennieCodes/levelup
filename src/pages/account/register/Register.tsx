@@ -3,7 +3,11 @@ import styles from "./Register.module.scss";
 import useInputState from "../../../hooks/useInputState";
 import validateEmail from "../../../helpers/validateEmail";
 
-const Register = () => {
+type RegisterProp = {
+  toggleRegister: () => void;
+};
+
+const Register = ({ toggleRegister }: RegisterProp) => {
   const [validEmail, setValidEmail] = useState(false);
 
   const [name, handleName, nameReset] = useInputState("");
@@ -94,6 +98,10 @@ const Register = () => {
           />
         </label>
         <button type="submit">Submit</button>
+        <p>
+          Already have an account?
+          <button onClick={toggleRegister}>Sign In</button>
+        </p>
       </form>
     </div>
   );
