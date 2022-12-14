@@ -5,8 +5,6 @@ import validateEmail from "../../../helpers/validateEmail";
 import React from "react";
 import { signIn } from "next-auth/react";
 
-// import { getProviders } from 'next-auth/react';
-
 type LoginProp = {
   toggleRegister: () => void;
 };
@@ -16,14 +14,6 @@ const Login = ({ toggleRegister }: LoginProp) => {
 
   const [email, setEmail, emailReset] = useInputState("");
   const [password, setPassword, passwordReset] = useInputState("");
-
-  // CODE below is to check next-auth setup providers
-  // const providers = async () => {
-  // 	const providers = await getProviders();
-  // 	return providers;
-  // };
-
-  // void providers().then((response) => console.log(response));
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e);
@@ -41,20 +31,23 @@ const Login = ({ toggleRegister }: LoginProp) => {
     // https://github.com/deanilvincent/check-password-strength
   };
 
-  const loginHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const loginHandler = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-
-    const result = signIn("credentials", {
-      redirect: false,
-      email: email,
-      password: password,
-    });
-
-    console.log("Results within Login Component: ", result);
+    try {
+      await signIn("credentials", {
+        redirect: true,
+        email: email,
+        password: password,
+        callbackUrl: "/",
+      });
+    } catch (error) {
+      console.error("Error: ", error);
+    }
   };
 
   return (
     <div className={styles.container}>
+      {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form className={styles.registerForm} onSubmit={loginHandler}>
         <div>
           <label htmlFor="email">
